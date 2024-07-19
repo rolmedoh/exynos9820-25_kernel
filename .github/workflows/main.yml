@@ -5,13 +5,29 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        model: [ "G973F" ]
 
     steps:
       - uses: actions/checkout@v2
 
       - name: env setup
         run: sudo apt-get update --fix-missing && sudo apt-get install bc bison build-essential zstd clang flex gnupg gperf ccache liblz4-tool libncurses5-dev libsdl1.2-dev libstdc++6 libxml2 libxml2-utils lzop pngcrush schedtool squashfs-tools xsltproc zlib1g-dev libncurses5-dev bzip2 git gcc g++ libssl-dev openssl python3 -y && sudo apt-get install gcc-aarch64-linux-gnu && sudo apt-get install gcc-arm-linux-gnueabihf&& sudo apt-get install lld&& sudo apt-get install gcc-arm-linux-gnueabi
-        
+      - name: Kernel Configure
+        run: |
+          ./cruelbuild config                    \
+                     model=${{ matrix.model }} \
+                     name="rolmedo_kernel"     \
+                     +magisk                   \
+                     +nohardening              \
+                     +ttl                      \
+                     +wireguard                \
+                     +cifs                     \
+                     +sdfat                    \
+                     +ntfs                     \
+                     +morosound                \
+                     +boeffla_wl_blocker
       - name: build
         env:
           token: ${{ secrets.TOKEN }}
