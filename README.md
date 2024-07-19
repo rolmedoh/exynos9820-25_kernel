@@ -6,7 +6,9 @@ Based on samsung sources and android common tree.
 Supported devices: G970F/N, G973F/N, G975F/N G977B/N, N970F, N975F,
 N971N, N976B/N.
 
+
 ## Contributors
+
 
 - fart1-git - for removing vendor check of DP cables in DEX mode
 - NZNewbie - for adding fiops scheduler
